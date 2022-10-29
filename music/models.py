@@ -22,7 +22,7 @@ class Album(models.Model):
     )
     release_date = models.DateField(blank=True, null=True)
     favorited_by = models.ManyToManyField(User, related_name="favorite_albums")
-    genre = models.ManyToManyField("Genre", related_name='albums')
+    genre =  models.ManyToManyField("Genre", related_name="albums")
 
     def __repr__(self):
         return f"<Album {self.title} pk={self.pk} >"
@@ -57,6 +57,7 @@ class Genre(BaseModel):
     def __repr__(self):
         return f"<Genre name={self.name}>"
 
-    def save(self):
+    def save(self, *args, **kwargs):
+      if self.slug is None:
         self.slug = slugify(self.name)
-        super().save()
+      super().save(*args, **kwargs)
