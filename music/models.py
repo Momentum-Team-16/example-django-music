@@ -21,7 +21,7 @@ class Album(models.Model):
         "Artist", on_delete=models.SET_NULL, null=True, blank=True
     )
     release_date = models.DateField(blank=True, null=True)
-    favorited_by = models.ManyToManyField(User, related_name="favorite_albums")
+    favorited_by = models.ManyToManyField(User, related_name="favorite_albums", blank=True)
     genre =  models.ManyToManyField("Genre", related_name="albums")
 
     def __repr__(self):
