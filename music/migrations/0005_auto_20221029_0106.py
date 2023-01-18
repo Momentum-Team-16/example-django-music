@@ -13,6 +13,7 @@ def create_genres(apps, schema_editor):
     for genre_name in genre_data.genres:
         Genre.objects.get_or_create(name=genre_name, slug=slugify(genre_name))
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

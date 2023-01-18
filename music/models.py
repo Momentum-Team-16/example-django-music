@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.text import slugify
 
+
 class User(AbstractUser):
     def __str__(self):
         return self.username
@@ -21,8 +22,10 @@ class Album(models.Model):
         "Artist", on_delete=models.SET_NULL, null=True, blank=True
     )
     release_date = models.DateField(blank=True, null=True)
-    favorited_by = models.ManyToManyField(User, related_name="favorite_albums", blank=True)
-    genre =  models.ManyToManyField("Genre", related_name="albums")
+    favorited_by = models.ManyToManyField(
+        User, related_name="favorite_albums", blank=True
+    )
+    genre = models.ManyToManyField("Genre", related_name="albums")
 
     def __repr__(self):
         return f"<Album {self.title} pk={self.pk} >"
@@ -58,6 +61,6 @@ class Genre(BaseModel):
         return f"<Genre name={self.name}>"
 
     def save(self, *args, **kwargs):
-      if self.slug is None:
-        self.slug = slugify(self.name)
-      super().save(*args, **kwargs)
+        if self.slug is None:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
