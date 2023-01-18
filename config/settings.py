@@ -13,7 +13,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import environ
 
-env = environ.Env(DEBUG=(bool, False))
+env = environ.Env(
+  DEBUG=(bool, False),
+  RENDER=(bool, False)
+  )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -126,3 +129,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 AUTH_USER_MODEL = "music.User"
+
+if env("RENDER"):
+  ALLOWED_HOSTS.append(env("RENDER_EXTERNAL_HOSTNAME"))
