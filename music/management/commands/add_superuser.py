@@ -1,6 +1,6 @@
 # your-app/management/commands/add_superuser.py
 
-import random
+import os
 
 from django.core.management.base import BaseCommand
 
@@ -14,7 +14,7 @@ class Command(BaseCommand):
     help = "Create a superuser in production"
 
     def handle(self, *args, **options):
-        if not settings.DEBUG:
+        if os.environ.get('RENDER'):
           user, created = User.objects.get_or_create(
                 username=settings.DJANGO_SUPERUSER_USERNAME
             )
